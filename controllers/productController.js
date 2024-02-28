@@ -23,38 +23,39 @@ exports.createProduct = async (req, res) => {
     const attributes = reqBody.attributes || [];
     const product = reqBody.product;
 
-    let attributes_codes;
-    if (attributes.length > 0) {
-        attributes_codes = await createAndStoreAttributes(attributes)
-    }
+    // let attributes_codes;
+    // if (attributes.length > 0) {
+    //     attributes_codes = await createAndStoreAttributes(attributes)
+    // }
 
-    const custom_attributes = attributes_codes.map(code => {
-        return {
-            attribute_code: code,
-            value: attributes.find(attr => attr.attribute_code === code)?.value || ""
-        }
-    });
+    // const custom_attributes = attributes_codes.map(code => {
+    //     return {
+    //         attribute_code: code,
+    //         value: attributes.find(attr => attr.attribute_code === code)?.value || ""
+    //     }
+    // });
 
-    const product_data = {
-        ...product,
-        custom_attributes
-    }
+    // const product_data = {
+    //     ...product,
+    //     custom_attributes
+    // }
 
-    console.dir(product_data, { depth: null })
-    const response = await axios.post(`${apiURL}/products`, product, {
+    // console.dir(product_data, { depth: null })
+    console.log(product);
+    const response = await axios.post(`${apiURL}/products`, reqBody, {
       headers: {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
       },
     });
-
-    res.status(201).json({
-      message: "Product created successfully",
-      data: response,
-    });
+    console.dir(response, { depth: null })
+    return res.status(201).send({
+      message: "Product created successfully",    });
   } catch (error) {
-    console.log(error.message)
-    res.status(500).json({
+    // console.log(error)
+    // console.log(error.message)
+    console.dir(error, { depth: null })
+   return res.status(500).send({
       message: "Failed to create product",
       error: error,
     });
