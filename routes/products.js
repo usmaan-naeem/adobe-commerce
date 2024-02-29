@@ -2,6 +2,7 @@ const express = require('express');
 const { fetchProducts } = require('../services/productSearch');
 const { updateProductPricesBulk } = require("../services/updateProducts")
 const { createProduct } = require("../controllers/productController")
+const { searchProduct } = require('../controllers/searchProduct');
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.get('/search', async (req, res) => {
       res.status(500).send({ error: error.message });
     }
   });
+router.post('/searchProduct', searchProduct);
 
 module.exports = router;

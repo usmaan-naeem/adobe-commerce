@@ -43,27 +43,53 @@ exports.createProduct = async (req, res) => {
     // }
 
     // console.log("===> ", product_data)
-    const response = await axios.put(
-      `${apiURL}/products/product_dynamic_74192218`,
-      reqBody,
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+  //   const response = await axios.put(
+  //     `${apiURL}/products/product_dynamic_74192218`,
+  //     reqBody,
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${accessToken}`,
+  //         "Content-Type": "application/json",
+  //       },
+  //     }
+  //   );
 
-    console.dir(response, { depth: null });
-    res.send(
-      JSON.stringify({
-        message: "Product created successfully",
-        data: response,
-      })
-    );
+  //   console.dir(response, { depth: null });
+  //   res.send(
+  //     JSON.stringify({
+  //       message: "Product created successfully",
+  //       data: response,
+  //     })
+  //   );
+  // } catch (error) {
+  //   console.dir(error, { depth: null });
+  //   res.status(500).json({})
+    //         attribute_code: code,
+    //         value: attributes.find(attr => attr.attribute_code === code)?.value || ""
+    //     }
+    // });
+
+    // const product_data = {
+    //     ...product,
+    //     custom_attributes
+    // }
+
+    // console.dir(product_data, { depth: null })
+    console.log(product);
+    const response = await axios.post(`${apiURL}/products`, reqBody, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    console.dir(response, { depth: null })
+    return res.status(201).send({
+      message: "Product created successfully",    });
   } catch (error) {
-    console.dir(error, { depth: null });
-    res.status(500).json({
+    // console.log(error)
+    // console.log(error.message)
+    console.dir(error, { depth: null })
+   return res.status(500).send({
       message: "Failed to create product",
       error: error,
     });
