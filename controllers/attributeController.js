@@ -4,9 +4,9 @@ const MagentoURL =
 const adminToken = "8ry8ly8f0o31sqxpzoipzlhe4lso6z5b";
 
 exports.createAttribute = async (attributeData) => {
-    let attribute = { ...attributeData };
-    delete attribute.value;
-  console.log({ attribute });
+  // let attribute = { ...attributeData };
+  // delete attribute.value;
+  // console.log({ attributeData });
   const url = `${MagentoURL}/products/attributes`;
   const config = {
     headers: {
@@ -16,12 +16,10 @@ exports.createAttribute = async (attributeData) => {
   };
 
   try {
-    const response = await axios.post(
-      url,
-      { attribute: attribute },
-      config
-    );
-    return response.data?.attribute_code || "";
+    const response = await axios.post(url, { attribute: attributeData }, config);
+
+    // console.log("==> ", response)
+    return response.data;
   } catch (error) {
     console.log(error);
     // res.status(500).json({ error: error.toString() });

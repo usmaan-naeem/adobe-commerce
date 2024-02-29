@@ -1,9 +1,22 @@
 const express = require('express');
-const { createProduct } = require('../controllers/productController');
+const { fetchProducts } = require('../services/productSearch');
+const { updateProductPricesBulk } = require("../services/updateProducts")
+const { createProduct } = require("../controllers/productController")
 
 const router = express.Router();
 
 // POST request to create a new product
 router.post('/', createProduct);
+router.get('/search', async (req, res) => {
+    try {
+    //   const { phrase, pageSize, currentPage } = req.body;
+      const products = await fetchProducts();
+      await updateProductPricesBulk(products);
+      console.log(products.length)
+      res.json(products);
+    } catch (error) {
+      res.status(500).send({ error: error.message });
+    }
+  });
 
 module.exports = router;

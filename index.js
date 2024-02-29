@@ -3,6 +3,8 @@ const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
 const bodyParser = require('body-parser');
 
+require('dotenv').config();
+
 const app = express();
 
 app.use(bodyParser.json());
